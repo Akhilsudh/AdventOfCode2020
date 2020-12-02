@@ -28,8 +28,28 @@ public class passwordPhilosophy{
     }
     return result;
   }
+  public int puzzle2() throws IOException{
+    BufferedReader br = new BufferedReader(new FileReader("day2/passwordPolicy.list"));
+    int result = 0;
+    String line;
+    String patternString = "(\\d*)[-](\\d*)[\\s]([a-z])[:][\\s]([a-z]*).*";
+    Pattern pattern = Pattern.compile(patternString);
+    while((line = br.readLine()) != null) {
+      Matcher match = pattern.matcher(line);
+      match.find();
+      int num1 = Integer.parseInt(match.group(1)) - 1;
+      int num2 = Integer.parseInt(match.group(2)) - 1;
+      char letter = match.group(3).charAt(0);
+      String password = match.group(4);
+      if((password.charAt(num1) == letter && password.charAt(num2) != letter) || (password.charAt(num1) != letter && password.charAt(num2) == letter)) {
+        result += 1;
+      }
+    }
+    return result;
+  }
   public static void main(String[] args) throws IOException {
     passwordPhilosophy obj = new passwordPhilosophy();
     System.out.println(obj.puzzle1());
+    System.out.println(obj.puzzle2());
   }
 }
