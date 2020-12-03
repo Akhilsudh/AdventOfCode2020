@@ -24,6 +24,7 @@ public class reportRepair1 {
     while((line = br.readLine()) != null) {
       dates.add(Integer.parseInt(line));
     }
+    br.close();
     for(int date: dates) {
       if((2020 - date !=  date) && (dates.contains(2020 - date))) {
         System.out.println(date + " * " + (2020 - date) + " = ");

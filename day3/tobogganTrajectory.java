@@ -10,6 +10,7 @@ public class tobogganTrajectory {
     while((line = br.readLine()) != null) {
       map.add(line);
     }
+    br.close();
     int i = 0, j = 0;
     int len = map.get(0).length();
     while(i < map.size()){

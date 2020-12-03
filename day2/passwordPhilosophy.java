@@ -26,6 +26,7 @@ public class passwordPhilosophy{
         result += 1;
       }
     }
+    br.close();
     return result;
   }
   public int puzzle2() throws IOException{
@@ -45,6 +46,7 @@ public class passwordPhilosophy{
         result += 1;
       }
     }
+    br.close();
     return result;
   }
   public static void main(String[] args) throws IOException {

@@ -17,6 +17,7 @@ public class reportRepair2 {
     while((line = br.readLine()) != null) {
       dates.add(Integer.parseInt(line));
     }
+    br.close();
     for(int date1: dates) {
       if(flag) {
         break;
