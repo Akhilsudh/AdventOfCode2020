@@ -37,6 +37,7 @@ public class passportProcessing {
       keys = new HashSet<String>();
       passport  = "";
     }
+    br.close();
     return result;
   }
   public int processPassportsPuzzle2(String filename) throws IOException {
@@ -155,6 +156,7 @@ public class passportProcessing {
       map = new HashMap<String, String>();
       passport  = "";
     }
+    br.close();
     return result;
   }
   public static void main(String[] args) throws IOException {
