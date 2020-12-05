@@ -31,6 +31,7 @@ public class binaryBoarding {
     }
     return row * 8 + col;
   }
+  // Puzzle 1
   public int maxSeatID() throws IOException {
     BufferedReader br = new BufferedReader(new FileReader("day5/boarding.pass"));
     int seatID = 0;
@@ -45,17 +46,22 @@ public class binaryBoarding {
     }
     return seatID;
   }
+  // Puzzle 2
   public int calculateYourSeatID() throws IOException{
     BufferedReader br = new BufferedReader(new FileReader("day5/boarding.pass"));
     int seatID = 0;
     String line = "";
+    int min = Integer.MAX_VALUE;
+    int max = 0;
     Set<Integer> passes = new HashSet<Integer>();
     while((line = br.readLine()) != null) {
       int pass = calculateSeatID(line);
+      min = Math.min(min, pass);
+      max = Math.max(max, pass);
       passes.add(pass);
     }
-    System.out.println(passes);
-    for(int i = 48; i < 875; i++) {
+    br.close();
+    for(int i = min; i <= max; i++) {
       if(!passes.contains(i)) {
         return i;
       }
@@ -64,7 +70,7 @@ public class binaryBoarding {
   }
   public static void main(String[] args) throws IOException {
     binaryBoarding obj = new binaryBoarding();
-    // System.out.println(obj.maxSeatID());
-    System.out.println(obj.calculateYourSeatID());
+    System.out.println("Puzzle 1 solution = " + obj.maxSeatID());
+    System.out.println("Puzzle 2 solution = " + obj.calculateYourSeatID());
   }
 }
