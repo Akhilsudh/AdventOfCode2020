@@ -1,4 +1,6 @@
+// https://adventofcode.com/2020/day/6
 package day6;
+
 import java.io.*;
 import java.util.*;
 public class customCustoms {

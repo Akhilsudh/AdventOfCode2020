@@ -1,4 +1,6 @@
+// https://adventofcode.com/2020/day/3
 package day3;
+
 import java.util.*;
 import java.io.*;
 public class tobogganTrajectory {
@@ -30,11 +32,7 @@ public class tobogganTrajectory {
     long slope51 = obj.puzzle(5, 1, "day3/geology.pattern");
     long slope71 = obj.puzzle(7, 1, "day3/geology.pattern");
     long slope12 = obj.puzzle(1, 2, "day3/geology.pattern");
-    System.out.println("The tree count with slope right 1 and down 1 = " + slope11);
-    System.out.println("The tree count with slope right 3 and down 1 = " + slope31);
-    System.out.println("The tree count with slope right 5 and down 1 = " + slope51);
-    System.out.println("The tree count with slope right 7 and down 1 = " + slope71);
-    System.out.println("The tree count with slope right 1 and down 2 = " + slope12);
-    System.out.println("The product of all these values are = " + (slope11 * slope31 * slope51 * slope71 * slope12));
+    System.out.println("Puzzle 1 solution = " + slope31);
+    System.out.println("Puzzle 2 solution = " + (slope11 * slope31 * slope51 * slope71 * slope12));
   }
 }

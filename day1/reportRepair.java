@@ -1,4 +1,6 @@
+// https://adventofcode.com/2020/day/1
 package day1;
+
 import java.util.*;
 import java.io.*;
 

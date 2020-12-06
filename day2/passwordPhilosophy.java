@@ -1,3 +1,4 @@
+// https://adventofcode.com/2020/day/2
 package day2;
 
 import java.util.regex.*;
@@ -51,7 +52,7 @@ public class passwordPhilosophy{
   }
   public static void main(String[] args) throws IOException {
     passwordPhilosophy obj = new passwordPhilosophy();
-    System.out.println(obj.puzzle1());
-    System.out.println(obj.puzzle2());
+    System.out.println("Puzzle 1 solution = " + obj.puzzle1());
+    System.out.println("Puzzle 2 solution = " + obj.puzzle2());
   }
 }

@@ -1,4 +1,6 @@
+// https://adventofcode.com/2020/day/5
 package day5;
+
 import java.io.*;
 import java.util.*;
 public class binaryBoarding {
