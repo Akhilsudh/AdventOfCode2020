@@ -1,3 +1,4 @@
+// https://adventofcode.com/2020/day/7
 package day7;
 
 import java.io.*;
@@ -13,13 +14,14 @@ public class handyHaversacks {
       DFS(result, map, bag);
     }
   }
-  private int maxDFS(Map<String, Map<String, Integer>> map, String key, int sum, int multi) {
+  private int maxDFS(Map<String, Map<String, Integer>> map, String key) {
     if(!map.containsKey(key)) {
-      return 1;
+      return 0;
     }
+    int sum = 0;
     Map<String, Integer> valueMap = map.get(key);
     for(String colour: valueMap.keySet()) {
-      sum += valueMap.get(colour) * maxDFS(map, colour);
+      sum += valueMap.get(colour) * (1 + maxDFS(map, colour));
     }
     return sum;
   }
@@ -30,7 +32,6 @@ public class handyHaversacks {
     while((line = br.readLine()) != null) {
       String[] bagString = line.split(" contain ");
       String[] bagContents = bagString[1].split(", ");
-      // bagContents[bagContents.length - 1] = bagContents[bagContents.length - 1].substring(0, bagContents[bagContents.length - 1].length() - 1);
       Set<String> set = new HashSet<String>();
       for(String content: bagContents) {
         content = content.substring(2, content.length());
@@ -45,7 +46,6 @@ public class handyHaversacks {
       }
     }
     br.close();
-    System.out.println(map);
     String value = "shiny gold";
     Set<String> result = new HashSet<String>();
     DFS(result, map, value);
@@ -63,26 +63,20 @@ public class handyHaversacks {
       }
       Map<String, Integer> valueMap = new HashMap<String, Integer>();
       for(String content: bagContents) {
-        // if(content.equals("no other bags.")) {
-        //   continue;
-        // }
         String[] arr = content.split(" ", 2);
         int value = Integer.parseInt(arr[0]);
         String key = arr[1].substring(0, content.lastIndexOf(" ", arr[1].length()) - 2);
-        System.out.println(key + " " + key.length());
         valueMap.put(key, value);
       }
       map.put(bagString[0], valueMap);
     }
     br.close();
-    System.out.println(map);
     String value = "shiny gold";
-    // maxDFS
-    return 0;
+    return maxDFS(map, value);
   }
   public static void main(String[] args) throws IOException{
     handyHaversacks obj = new handyHaversacks();
-    // System.out.println("Puzzle 1 solution = " + obj.getSuperBagCount());
+    System.out.println("Puzzle 1 solution = " + obj.getSuperBagCount());
     System.out.println("Puzzle 2 solution = " + obj.getMaxBagCount());
   }
 }
