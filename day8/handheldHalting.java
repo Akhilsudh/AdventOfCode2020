@@ -4,6 +4,34 @@ package day8;
 import java.io.*;
 import java.util.*;
 public class handheldHalting {
+  private int[] getInstructionAccumulator(List<String> instructionList, int index, int accumulator) {
+    int[] returnValue = new int[2];
+    String instruction = instructionList.get(index);
+    String[] instructions = instruction.split(" ");
+    if(instructions[0].equals("nop")) {
+      index += 1;
+    }
+    else if(instructions[0].equals("acc")) {
+      if(instructions[1].charAt(0) == '+') {
+        accumulator += Integer.parseInt(instructions[1].substring(1));
+      }
+      else {
+        accumulator -= Integer.parseInt(instructions[1].substring(1));
+      }
+      index += 1;
+    }
+    else if(instructions[0].equals("jmp")){
+      if(instructions[1].charAt(0) == '+') {
+        index += Integer.parseInt(instructions[1].substring(1));
+      }
+      else {
+        index -= Integer.parseInt(instructions[1].substring(1));
+      }
+    }
+    returnValue[0] = index;
+    returnValue[1] = accumulator;
+    return returnValue;
+  }
   public int getAccumulator() throws IOException{
     BufferedReader br = new BufferedReader(new FileReader("day8/instruction.list"));
     List<String> instructionList = new ArrayList<String>();
@@ -13,8 +41,6 @@ public class handheldHalting {
       instructionList.add(line);
     }
     br.close();
-
-    String instruction = "";
     boolean[] visited = new boolean[instructionList.size()];
     int index = 0;
     while(true) {
@@ -22,28 +48,9 @@ public class handheldHalting {
         break;
       }
       visited[index] = true;
-      instruction = instructionList.get(index);
-      String[] instructions = instruction.split(" ");
-      if(instructions[0].equals("nop")) {
-        index += 1;
-      }
-      else if(instructions[0].equals("acc")) {
-        if(instructions[1].charAt(0) == '+') {
-          accumulator += Integer.parseInt(instructions[1].substring(1));
-        }
-        else {
-          accumulator -= Integer.parseInt(instructions[1].substring(1));
-        }
-        index += 1;
-      }
-      else if(instructions[0].equals("jmp")){
-        if(instructions[1].charAt(0) == '+') {
-          index += Integer.parseInt(instructions[1].substring(1));
-        }
-        else {
-          index -= Integer.parseInt(instructions[1].substring(1));
-        }
-      }
+      int[] indexAccumulator = getInstructionAccumulator(instructionList, index, accumulator);
+      index = indexAccumulator[0];
+      accumulator = indexAccumulator[1];
     }
     return accumulator;
   }
@@ -56,7 +63,6 @@ public class handheldHalting {
       instructionList.add(line);
     }
     br.close();
-
     for(int i = 0; i < instructionList.size(); i++) {
       ArrayList<String> moddedInstructionList = new ArrayList<String>(instructionList);
       String[] moddedInstruction = moddedInstructionList.get(i).split(" ");
@@ -69,7 +75,6 @@ public class handheldHalting {
       else {
         continue;
       }
-      String instruction = "";
       boolean[] visited = new boolean[moddedInstructionList.size()];
       int index = 0;
       accumulator = 0;
@@ -78,28 +83,9 @@ public class handheldHalting {
           break;
         }
         visited[index] = true;
-        instruction = moddedInstructionList.get(index);
-        String[] instructions = instruction.split(" ");
-        if(instructions[0].equals("nop")) {
-          index += 1;
-        }
-        else if(instructions[0].equals("acc")) {
-          if(instructions[1].charAt(0) == '+') {
-            accumulator += Integer.parseInt(instructions[1].substring(1));
-          }
-          else {
-            accumulator -= Integer.parseInt(instructions[1].substring(1));
-          }
-          index += 1;
-        }
-        else if(instructions[0].equals("jmp")){
-          if(instructions[1].charAt(0) == '+') {
-            index += Integer.parseInt(instructions[1].substring(1));
-          }
-          else {
-            index -= Integer.parseInt(instructions[1].substring(1));
-          }
-        }
+        int[] indexAccumulator = getInstructionAccumulator(moddedInstructionList, index, accumulator);
+        index = indexAccumulator[0];
+        accumulator = indexAccumulator[1];
       }
       if(index >= moddedInstructionList.size() - 1) {
         break;
