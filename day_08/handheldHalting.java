@@ -1,5 +1,5 @@
 // https://adventofcode.com/2020/day/8
-package day8;
+package day_08;
 
 import java.io.*;
 import java.util.*;

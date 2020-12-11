@@ -1,5 +1,5 @@
 // https://adventofcode.com/2020/day/2
-package day2;
+package day_02;
 
 import java.util.regex.*;
 import java.io.*;
