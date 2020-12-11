@@ -103,13 +103,6 @@ public class seatingSystem {
         seatArr[i][j] = seatMap.get(i).charAt(j);
       }
     }
-
-    // for(int i = 0; i < colSize; i++) {
-    //   for(int j = 0; j < rowSize; j++) {
-    //     System.out.print(seatArr[i][j] + " ");
-    //   }
-    //   System.out.println();
-    // }
     int occupiedSeats = 0;
     int previousOccupiedSeats = Integer.MAX_VALUE;
     boolean flag = true;
@@ -119,14 +112,6 @@ public class seatingSystem {
           seatArrCopy[i][j] = seatArr[i][j];
         }
       }
-
-      // for(int i = 0; i < colSize; i++) {
-        // for(int j = 0; j < rowSize; j++) {
-          // System.out.print(seatArr[i][j] + " ");
-        // }
-        // System.out.println();
-      // }
-
       for(int i = 0; i < colSize; i++) {
         for(int j = 0; j < rowSize; j++) {
           if(seatArrCopy[i][j] == 'L') {
@@ -201,7 +186,7 @@ public class seatingSystem {
             b = j - 1;
             while(a < colSize && b >= 0 && seatArrCopy[a][b] == '.') {
               a += 1;
-              b += 1;
+              b -= 1;
             }
             if(a < colSize && b >= 0 && seatArrCopy[a][b] == '#') {
               BL = false;
@@ -214,39 +199,88 @@ public class seatingSystem {
           }
           else if(seatArrCopy[i][j] == '#') {
             int seatCount = 0;
-            if((i - 1 >= 0) && (seatArrCopy[i - 1][j] == '#')) {
+            int a = i - 1;
+            int b = j;
+            while(a >= 0 && seatArrCopy[a][b] == '.') {
+              a -= 1;
+            }
+            if(a >= 0 && seatArrCopy[a][b] == '#') {
               seatCount += 1;
             }
-            if((i + 1 < colSize) && (seatArrCopy[i + 1][j] == '#')) {
+            
+            a = i + 1; 
+            b = j;
+            while(a < colSize && seatArrCopy[a][b] == '.') {
+              a += 1;
+            }
+            if(a < colSize && seatArrCopy[a][b] == '#') {
               seatCount += 1;
             }
-            if((j - 1 >= 0) && (seatArrCopy[i][j - 1] == '#')) {
+
+            a = i; 
+            b = j - 1;
+            while(b >= 0 && seatArrCopy[a][b] == '.') {
+              b -= 1;
+            }
+            if(b >= 0 && seatArrCopy[a][b] == '#') {
               seatCount += 1;
             }
-            if((j + 1 < rowSize) && (seatArrCopy[i][j + 1] == '#')) {
+
+            a = i; 
+            b = j + 1;
+            while(b < rowSize && seatArrCopy[a][b] == '.') {
+              b += 1;
+            }
+            if(b < rowSize && seatArrCopy[a][b] == '#') {
               seatCount += 1;
             }
-            if((i - 1 >= 0) && (j - 1 >= 0) && (seatArrCopy[i - 1][j - 1] == '#')) {
+
+            a = i - 1;
+            b = j - 1;
+            while(a >= 0 && b >= 0 && seatArrCopy[a][b] == '.') {
+              a -= 1;
+              b -= 1;
+            }
+            if(a >= 0 && b >= 0 && seatArrCopy[a][b] == '#') {
               seatCount += 1;
             }
-            if((i - 1 >= 0) && (j + 1 < rowSize) && (seatArrCopy[i - 1][j + 1] == '#')) {
+
+            a = i - 1;
+            b = j + 1;
+            while(a >= 0 && b < rowSize && seatArrCopy[a][b] == '.') {
+              a -= 1;
+              b += 1;
+            }
+            if(a >= 0 && b < rowSize && seatArrCopy[a][b] == '#') {
               seatCount += 1;
             }
-            if((i + 1 < colSize) && (j + 1 < rowSize) && (seatArrCopy[i + 1][j + 1] == '#')) {
+
+            a = i + 1;
+            b = j + 1;
+            while(a < colSize && b < rowSize && seatArrCopy[a][b] == '.') {
+              a += 1;
+              b += 1;
+            }
+            if(a < colSize && b < rowSize && seatArrCopy[a][b] == '#') {
               seatCount += 1;
             }
-            if((i + 1 < colSize) && (j - 1 >= 0) && (seatArrCopy[i + 1][j - 1] == '#')) {
+
+            a = i + 1;
+            b = j - 1;
+            while(a < colSize && b >= 0 && seatArrCopy[a][b] == '.') {
+              a += 1;
+              b -= 1;
+            }
+            if(a < colSize && b >= 0 && seatArrCopy[a][b] == '#') {
               seatCount += 1;
             }
-            if(seatCount >= 4) {
-              // System.out.println("occupied seat to be changed = " + i + " " + j);
+            if(seatCount >= 5) {
               seatArr[i][j] = 'L';
               occupiedSeats -= 1;
             }
           }
         }
       }
-      // System.out.println(occupiedSeats);
       if(occupiedSeats == previousOccupiedSeats) {
         flag = false;
       }
@@ -258,6 +292,6 @@ public class seatingSystem {
   public static void main(String[] args) throws IOException{
     seatingSystem obj = new seatingSystem();
     System.out.println("Puzzle 1 solution = " + obj.getOccupied());
-    // System.out.println("Puzzle 2 solution = " + obj.getNewOccupied());
+    System.out.println("Puzzle 2 solution = " + obj.getNewOccupied());
   }
 }
