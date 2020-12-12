@@ -63,25 +63,57 @@ public class rainRisk {
     result = Math.abs(resultMap.get("hor")) + Math.abs(resultMap.get("ver"));
     return result;
   }
-  // public int getNewManhattanDistance() throws IOException{
-  //   BufferedReader br = new BufferedReader(new FileReader("day_12/navigation.instructions"));
-  //   int result = 0;
-  //   String line = "";
-  //   List<String> instructions = new ArrayList<String>();
-  //   while((line = br.readLine()) != null) {
-  //     instructions.add(line);
-  //   }
-  //   br.close();
-  //   int[] position = {1, 10};
-  //   int[] wayPoint = {1, 10};
-  //   for(String instruction: instructions) {
-  //     int value = Integer.parseInt(instruction.substring(1));
-  //   }
-  //   return result;
-  // }
+  public int getNewManhattanDistance() throws IOException{
+    BufferedReader br = new BufferedReader(new FileReader("day_12/navigation.instructions"));
+    int result = 0;
+    String line = "";
+    List<String> instructions = new ArrayList<String>();
+    while((line = br.readLine()) != null) {
+      instructions.add(line);
+    }
+    br.close();
+    int[] position = {0, 0};
+    int[] wayPoint = {10, 1};
+    for(String instruction: instructions) {
+      char command = instruction.charAt(0);
+      int value = Integer.parseInt(instruction.substring(1));
+      if(command == 'L') {
+        for(int i = 0; i < value / 90; i++) {
+          int x = wayPoint[0];
+          wayPoint[0] = - wayPoint[1];
+          wayPoint[1] = x;
+        }
+      }
+      else if(command == 'R') {
+        for(int i = 0; i < value / 90; i++) {
+          int x = wayPoint[0];
+          wayPoint[0] = wayPoint[1];
+          wayPoint[1] = - x;
+        }
+      }
+      else if(command == 'N') {
+        wayPoint[1] += value;
+      }
+      else if(command == 'S') {
+        wayPoint[1] -= value;
+      }
+      else if(command == 'E') {
+        wayPoint[0] += value;
+      }
+      else if(command == 'W') {
+        wayPoint[0] -= value;
+      }
+      else if(command == 'F') {
+        position[0] = position[0] + value * wayPoint[0];
+        position[1] = position[1] + value * wayPoint[1];
+      }
+    }
+    result = Math.abs(position[0]) + Math.abs(position[1]);
+    return result;
+  }
   public static void main(String[] args) throws IOException{
     rainRisk obj = new rainRisk();
     System.out.println("Puzzle 1 solution = " + obj.getManhattanDistance());
-    // System.out.println("Puzzle 2 solution = " + obj.getNewManhattanDistance());
+    System.out.println("Puzzle 2 solution = " + obj.getNewManhattanDistance());
   }
 }
