@@ -6,7 +6,7 @@ import java.io.*;
 
 public class reportRepair {
   public int puzzle1() throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader("day1/reportRepair.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_01/reportRepair.list"));
     Set<Integer> dates = new HashSet<Integer>();
     String line;
     while((line = br.readLine()) != null) {
@@ -21,7 +21,7 @@ public class reportRepair {
     return 0;
   }
   public int puzzle2() throws IOException{
-    BufferedReader br = new BufferedReader(new FileReader("day1/reportRepair.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_01/reportRepair.list"));
     Set<Integer> dates = new HashSet<Integer>();
     String line;
     boolean flag = false;

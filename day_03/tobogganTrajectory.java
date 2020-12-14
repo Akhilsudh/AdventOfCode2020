@@ -27,11 +27,11 @@ public class tobogganTrajectory {
   }
   public static void main(String[] args) throws IOException {
     tobogganTrajectory obj = new tobogganTrajectory();
-    long slope11 = obj.puzzle(1, 1, "day3/geology.pattern");
-    long slope31 = obj.puzzle(3, 1, "day3/geology.pattern");
-    long slope51 = obj.puzzle(5, 1, "day3/geology.pattern");
-    long slope71 = obj.puzzle(7, 1, "day3/geology.pattern");
-    long slope12 = obj.puzzle(1, 2, "day3/geology.pattern");
+    long slope11 = obj.puzzle(1, 1, "day_03/geology.pattern");
+    long slope31 = obj.puzzle(3, 1, "day_03/geology.pattern");
+    long slope51 = obj.puzzle(5, 1, "day_03/geology.pattern");
+    long slope71 = obj.puzzle(7, 1, "day_03/geology.pattern");
+    long slope12 = obj.puzzle(1, 2, "day_03/geology.pattern");
     System.out.println("Puzzle 1 solution = " + slope31);
     System.out.println("Puzzle 2 solution = " + (slope11 * slope31 * slope51 * slope71 * slope12));
   }

@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 public class adapterArray {
   public int getDistributionOfJoltageDifferences() throws IOException{
-    BufferedReader br = new BufferedReader(new FileReader("day10/joltage.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_10/joltage.list"));
     TreeSet<Integer> adapterSet = new TreeSet<Integer>();
     int result = 0;
     String line = "";
@@ -47,7 +47,7 @@ public class adapterArray {
     return result;
   }
   public long getTotalArrangementWays() throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader("day10/joltage.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_10/joltage.list"));
     TreeSet<Integer> adapterSet = new TreeSet<Integer>();
     String line = "";
     long result = 0;

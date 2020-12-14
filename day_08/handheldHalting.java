@@ -33,7 +33,7 @@ public class handheldHalting {
     return returnValue;
   }
   public int getAccumulator() throws IOException{
-    BufferedReader br = new BufferedReader(new FileReader("day8/instruction.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_08/instruction.list"));
     List<String> instructionList = new ArrayList<String>();
     int accumulator = 0;
     String line = "";
@@ -55,7 +55,7 @@ public class handheldHalting {
     return accumulator;
   }
   public int getFixedAccumulator() throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader("day8/instruction.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_08/instruction.list"));
     List<String> instructionList = new ArrayList<String>();
     int accumulator = 0;
     String line = "";

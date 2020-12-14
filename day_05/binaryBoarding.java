@@ -35,7 +35,7 @@ public class binaryBoarding {
   }
   // Puzzle 1
   public int maxSeatID() throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader("day5/boarding.pass"));
+    BufferedReader br = new BufferedReader(new FileReader("day_05/boarding.pass"));
     int seatID = 0;
     String line = "";
     List<String> passes = new ArrayList<String>();
@@ -50,7 +50,7 @@ public class binaryBoarding {
   }
   // Puzzle 2
   public int calculateYourSeatID() throws IOException{
-    BufferedReader br = new BufferedReader(new FileReader("day5/boarding.pass"));
+    BufferedReader br = new BufferedReader(new FileReader("day_05/boarding.pass"));
     int seatID = 0;
     String line = "";
     int min = Integer.MAX_VALUE;

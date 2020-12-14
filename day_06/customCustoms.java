@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 public class customCustoms {
   public int returnCount() throws IOException{
-    BufferedReader br = new BufferedReader(new FileReader("day6/group.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_06/group.list"));
     int result = 0;
     String line = "";
     Set<Character> groupLetters = new HashSet<Character>();
@@ -24,7 +24,7 @@ public class customCustoms {
     return result;
   }
   public int returnYesCount() throws IOException{
-    BufferedReader br = new BufferedReader(new FileReader("day6/group.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_06/group.list"));
     int result = 0;
     int groupCount = 0;
     String line = "";

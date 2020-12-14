@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 public class encodingError {
   public long getBreakingNumber() throws IOException{
-    BufferedReader br = new BufferedReader(new FileReader("day9/xmas.cipher"));
+    BufferedReader br = new BufferedReader(new FileReader("day_09/xmas.cipher"));
     long result = 0;
     String line = "";
     List<Long> numbers = new ArrayList<Long>();
@@ -36,7 +36,7 @@ public class encodingError {
   }
   public long getWeakness(long breakingNumber) throws IOException{
     long result = 0;
-    BufferedReader br = new BufferedReader(new FileReader("day9/xmas.cipher"));
+    BufferedReader br = new BufferedReader(new FileReader("day_09/xmas.cipher"));
     String line = "";
     List<Long> numbers = new ArrayList<Long>();
     List<Long> range = new ArrayList<Long>();

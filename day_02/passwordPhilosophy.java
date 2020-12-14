@@ -5,7 +5,7 @@ import java.util.regex.*;
 import java.io.*;
 public class passwordPhilosophy{
   public int puzzle1() throws IOException{
-    BufferedReader br = new BufferedReader(new FileReader("day2/passwordPolicy.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_02/passwordPolicy.list"));
     int result = 0;
     String line;
     String patternString = "(\\d*)[-](\\d*)[\\s]([a-z])[:][\\s]([a-z]*).*";
@@ -31,7 +31,7 @@ public class passwordPhilosophy{
     return result;
   }
   public int puzzle2() throws IOException{
-    BufferedReader br = new BufferedReader(new FileReader("day2/passwordPolicy.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_02/passwordPolicy.list"));
     int result = 0;
     String line;
     String patternString = "(\\d*)[-](\\d*)[\\s]([a-z])[:][\\s]([a-z]*).*";

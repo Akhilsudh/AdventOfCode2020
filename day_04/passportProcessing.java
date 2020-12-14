@@ -162,7 +162,7 @@ public class passportProcessing {
   }
   public static void main(String[] args) throws IOException {
     passportProcessing obj = new passportProcessing();
-    System.out.println("Puzzle 1 solution = " + obj.processPassportsPuzzle1("day4/passport.list"));
-    System.out.println("Puzzle 2 solution = " + obj.processPassportsPuzzle2("day4/passport.list"));
+    System.out.println("Puzzle 1 solution = " + obj.processPassportsPuzzle1("day_04/passport.list"));
+    System.out.println("Puzzle 2 solution = " + obj.processPassportsPuzzle2("day_04/passport.list"));
   }
 }

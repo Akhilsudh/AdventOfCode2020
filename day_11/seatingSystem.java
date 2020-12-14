@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 public class seatingSystem {
   public int getOccupied() throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader("day11/seats.map"));
+    BufferedReader br = new BufferedReader(new FileReader("day_11/seats.map"));
     int result = 0;
     String line = "";
     List<String> seatMap = new ArrayList<String>();
@@ -87,7 +87,7 @@ public class seatingSystem {
     return result;
   }
   public int getNewOccupied() throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader("day11/seats.map"));
+    BufferedReader br = new BufferedReader(new FileReader("day_11/seats.map"));
     int result = 0;
     String line = "";
     List<String> seatMap = new ArrayList<String>();

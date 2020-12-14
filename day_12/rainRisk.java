@@ -13,54 +13,77 @@ public class rainRisk {
       instructions.add(line);
     }
     br.close();
-    Map<Character, String> directions = new HashMap<Character, String>();
-    directions.put('E', "00");
-    directions.put('S', "31");
-    directions.put('W', "22");
-    directions.put('N', "13");
-    String[] positions = {"EE", "NS", "WW", "SN"};
-    Map<String, Integer> resultMap = new HashMap<String, Integer>();
-    resultMap.put("hor", 0);
-    resultMap.put("ver", 0);
+    int[] position = {0, 0};
     char direction = 'E';
+    char[][] directions = {{'N',}}; 
     for(String instruction: instructions) {
+      char command = instruction.charAt(0);
       int value = Integer.parseInt(instruction.substring(1));
-      if(instruction.charAt(0) == 'L' ) {
-        int angle = (Integer.parseInt(directions.get(direction).charAt(0) + "") + (value / 90)) % 4;
-        direction = positions[angle].charAt(0);
-      }
-      else if(instruction.charAt(0) == 'R') {
-        int angle = (Integer.parseInt(directions.get(direction).charAt(1) + "") + (value / 90)) % 4;
-        direction = positions[angle].charAt(1);
-      }
-      else if(instruction.charAt(0) == 'N') {
-        resultMap.put("ver", resultMap.get("ver") + value);
-      }
-      else if(instruction.charAt(0) == 'E') {
-        resultMap.put("hor", resultMap.get("hor") + value);
-      }
-      else if(instruction.charAt(0) == 'S') {
-        resultMap.put("ver", resultMap.get("ver") - value);
-      }
-      else if(instruction.charAt(0) == 'W') {
-        resultMap.put("hor", resultMap.get("hor") - value);
-      }
-      else if(instruction.charAt(0) == 'F') {
-        if(direction == 'E') {
-          resultMap.put("hor", resultMap.get("hor") + value);
-        }
-        else if(direction == 'W') {
-          resultMap.put("hor", resultMap.get("hor") - value);
-        }
-        else if(direction == 'N') {
-          resultMap.put("ver", resultMap.get("ver") + value);
-        }
-        else if(direction == 'S') {
-          resultMap.put("ver", resultMap.get("ver") - value);
-        }
+      switch(command) {
+        case 'N':
+          position[1] = position[1] + value;
+          break;
+        case 'S':
+          position[1] = position[1] + value;
+          break;
+        case 'E':
+          position[0] = position[0] + value;
+          break;
+        case 'W':
+          position[0] = position[0] - value;
+          break;
       }
     }
-    result = Math.abs(resultMap.get("hor")) + Math.abs(resultMap.get("ver"));
+    
+    
+    // Map<Character, String> directions = new HashMap<Character, String>();
+    // directions.put('E', "00");
+    // directions.put('S', "31");
+    // directions.put('W', "22");
+    // directions.put('N', "13");
+    // String[] positions = {"EE", "NS", "WW", "SN"};
+    // Map<String, Integer> resultMap = new HashMap<String, Integer>();
+    // resultMap.put("hor", 0);
+    // resultMap.put("ver", 0);
+    // char direction = 'E';
+    // for(String instruction: instructions) {
+    //   int value = Integer.parseInt(instruction.substring(1));
+    //   if(instruction.charAt(0) == 'L' ) {
+    //     int angle = (Integer.parseInt(directions.get(direction).charAt(0) + "") + (value / 90)) % 4;
+    //     direction = positions[angle].charAt(0);
+    //   }
+    //   else if(instruction.charAt(0) == 'R') {
+    //     int angle = (Integer.parseInt(directions.get(direction).charAt(1) + "") + (value / 90)) % 4;
+    //     direction = positions[angle].charAt(1);
+    //   }
+    //   else if(instruction.charAt(0) == 'N') {
+    //     resultMap.put("ver", resultMap.get("ver") + value);
+    //   }
+    //   else if(instruction.charAt(0) == 'E') {
+    //     resultMap.put("hor", resultMap.get("hor") + value);
+    //   }
+    //   else if(instruction.charAt(0) == 'S') {
+    //     resultMap.put("ver", resultMap.get("ver") - value);
+    //   }
+    //   else if(instruction.charAt(0) == 'W') {
+    //     resultMap.put("hor", resultMap.get("hor") - value);
+    //   }
+    //   else if(instruction.charAt(0) == 'F') {
+    //     if(direction == 'E') {
+    //       resultMap.put("hor", resultMap.get("hor") + value);
+    //     }
+    //     else if(direction == 'W') {
+    //       resultMap.put("hor", resultMap.get("hor") - value);
+    //     }
+    //     else if(direction == 'N') {
+    //       resultMap.put("ver", resultMap.get("ver") + value);
+    //     }
+    //     else if(direction == 'S') {
+    //       resultMap.put("ver", resultMap.get("ver") - value);
+    //     }
+    //   }
+    // }
+    // result = Math.abs(resultMap.get("hor")) + Math.abs(resultMap.get("ver"));
     return result;
   }
   public int getNewManhattanDistance() throws IOException{

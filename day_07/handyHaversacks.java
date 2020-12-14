@@ -26,7 +26,7 @@ public class handyHaversacks {
     return sum;
   }
   public int getSuperBagCount() throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader("day7/rules.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_07/rules.list"));
     String line = "";
     Map<String, Set<String>> map = new HashMap<String, Set<String>>();
     while((line = br.readLine()) != null) {
@@ -52,7 +52,7 @@ public class handyHaversacks {
     return result.size();
   }
   public int getMaxBagCount() throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader("day7/rules.list"));
+    BufferedReader br = new BufferedReader(new FileReader("day_07/rules.list"));
     String line = "";
     Map<String, Map<String, Integer>> map = new HashMap<String, Map<String, Integer>>();
     while((line = br.readLine()) != null) {
