@@ -7,54 +7,51 @@ public class rambunctiousRecitation {
   private static class State {
     int index;
     int oldIndex;
-    boolean fresh;
-    public State(int index, int oldIndex, boolean fresh) {
+    public State(int index, int oldIndex) {
       this.index = index;
       this.oldIndex = oldIndex;
-      this.fresh = fresh;
     }
   }
 
-  public int get2020(String numbers) {
+  public int getSpokenNumber(String numbers, int spokenIndex) {
     String[] numbersArr = numbers.split(",");
     Map<Integer, State> input = new HashMap<Integer, State>();
-    List<Integer> list = new ArrayList<Integer>();
     int i = 0;
+    int value = 0;
     for(i = 0; i < numbersArr.length; i++) {
-      input.put(Integer.parseInt(numbersArr[i]), new State(i, 0, true));
-      list.add(Integer.parseInt(numbersArr[i]));
+      value = Integer.parseInt(numbersArr[i]);
+      input.put(value, new State(i, -1));
     }
-    System.out.println(i);
-    int index = list.size() - 1;
-    while(index <= 2020) {
-      int number = list.get(index);
-      if(input.get(number).fresh) {
-        list.add(0);
+    int index = i - 1;
+    while(index < spokenIndex - 1) {
+      int number = value;
+      if(input.get(number).oldIndex == -1) {
+        value = 0;
         index += 1;
         if(input.containsKey(0)) {
-          input.put(0, new State(index, input.get(0).index, false));
+          input.put(0, new State(index, input.get(0).index));
         }
         else {
-          input.put(0, new State(index, 0, true));
+          input.put(0, new State(index, -1));
         }
       }
       else {
-        int value = input.get(number).index - input.get(number).oldIndex;
-        list.add(value);
+        value = input.get(number).index - input.get(number).oldIndex;
         index += 1;
         if(input.containsKey(value)) {
-          input.put(value, new State(index, input.get(value).index, false));
+          input.put(value, new State(index, input.get(value).index));
         }
         else {
-          input.put(value, new State(index, 0, true));
+          input.put(value, new State(index, -1));
         }
       }
     }
-    return list.get(2019);
+    return value;
   }
 
   public static void main(String[] args) {
     rambunctiousRecitation obj = new rambunctiousRecitation();
-    System.out.println("Puzzle 1 solution = " + obj.get2020("6,3,15,13,1,0"));
+    System.out.println("Puzzle 1 solution = " + obj.getSpokenNumber("6,3,15,13,1,0", 2020));
+    System.out.println("Puzzle 2 solution = " + obj.getSpokenNumber("6,3,15,13,1,0", 30000000));
   }
 }
