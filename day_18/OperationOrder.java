@@ -18,23 +18,9 @@ public class OperationOrder {
     Stack<Long> operands = new Stack<Long>();
     Stack<Character> operators = new Stack<Character>();
     int index = expression.length() - 1;
-    String number = "";
-    boolean pushFlag = false;
     do {
       char token = expression.charAt(index);
-      if(token == ' ') {
-        if(pushFlag) {
-          operands.push(Long.parseLong(number));
-          pushFlag = false;
-          number = "";
-        }
-      }
-      else if(token == '(') {
-        if(pushFlag) {
-          operands.push(Long.parseLong(number));
-          pushFlag = false;
-          number = "";
-        }
+      if(token == '(') {
         char operator;
         while((operator = operators.pop()) != ')') {
           long a = operands.pop();
@@ -46,11 +32,12 @@ public class OperationOrder {
         operators.push(token);
       }
       else if(token >= '0' && token <= '9') {
-        number = token + number;
-        pushFlag = true;
-        if(index == 0) {
-          operands.push(Long.parseLong(number));
+        int endindex = index;
+        while(index >= 0 && expression.charAt(index) >= '0' && expression.charAt(index) <= '9') {
+          index --;
         }
+        index ++;
+        operands.push(Long.parseLong(expression.substring(index, endindex + 1)));
       }
       index --;
     } while(index >= 0);
@@ -65,63 +52,69 @@ public class OperationOrder {
     return result;
   }
 
-  // long solveExpression(String expression) {
-  //   Stack<Long> operands = new Stack<Long>();
-  //   Stack<Character> operators = new Stack<Character>();
-  //   int index = expression.length() - 1;
-  //   String number = "";
-  //   boolean pushFlag = false;
-  //   do {
-  //     char token = expression.charAt(index);
-  //     if(token == ' ') {
-  //       if(pushFlag) {
-  //         operands.push(Long.parseLong(number));
-  //         pushFlag = false;
-  //         number = "";
-  //       }
-  //     }
-  //     else if(token == '(') {
-  //       if(pushFlag) {
-  //         operands.push(Long.parseLong(number));
-  //         pushFlag = false;
-  //         number = "";
-  //       }
-  //       char operator;
-  //       while((operator = operators.pop()) != ')') {
-  //         long a = operands.pop();
-  //         long b = operands.pop();
-  //         operands.push(applyOperation(a, b, operator));
-  //       }
-  //     }
-  //     else if(token == '+' || token == '*' || token == ')') {
-  //       operators.push(token);
-  //     }
-  //     else if(token >= '0' && token <= '9') {
-  //       number = token + number;
-  //       pushFlag = true;
-  //       if(index == 0) {
-  //         operands.push(Long.parseLong(number));
-  //       }
-  //     }
-  //     index --;
-  //   } while(index >= 0);
-  //   long result = 0;
-  //   while(!operators.empty()) {
-  //     long a = operands.pop();
-  //     long b = operands.pop();
-  //     char operator = operators.pop();
-  //     result = applyOperation(a, b, operator);
-  //     operands.push(result);
-  //   }
-  //   return result;
-  // }
+  long solveExpressionWithPrecedence(String expression) {
+    Stack<Long> operands = new Stack<Long>();
+    Stack<Character> operators = new Stack<Character>();
+    int index = expression.length() - 1;
+    do {
+      char token = expression.charAt(index);
+      if(token == '(') {
+        char operator;
+        while((operator = operators.pop()) != ')') {
+          if(operator == '*') {
+            if(!operators.empty() && operators.peek() == '+') {
+              long a = operands.pop();
+              long b = operands.pop();
+              long c = operands.pop();
+              operands.push(applyOperation(b, c, operators.pop()));
+              operands.push(a);
+              operators.push(operator);
+              continue;
+            }
+          }
+          operands.push(applyOperation(operands.pop(), operands.pop(), operator));
+        }
+      }
+      else if(token == '+' || token == '*' || token == ')') {
+        operators.push(token);
+      }
+      else if(token >= '0' && token <= '9') {
+        int endindex = index;
+        while(index >= 0 && expression.charAt(index) >= '0' && expression.charAt(index) <= '9') {
+          index --;
+        }
+        index ++;
+        operands.push(Long.parseLong(expression.substring(index, endindex + 1)));
+      }
+      index --;
+    } while(index >= 0);
+    long result = 0;
+    while(!operators.empty()) {
+      char operator = operators.pop();
+      if(operator == '*') {
+        if(!operators.empty() && operators.peek() == '+') {
+          long a = operands.pop();
+          long b = operands.pop();
+          long c = operands.pop();
+          result = applyOperation(b, c, operators.pop());
+          operands.push(result);
+          operands.push(a);
+          operators.push(operator);
+          continue;
+        }
+      }
+      result = applyOperation(operands.pop(), operands.pop(), operator);
+      operands.push(result);
+    }
+    return result;
+  }
 
   public long solve(boolean precedence) throws IOException {
     BufferedReader br = new BufferedReader(new FileReader("day_18/operations.list"));
     String line;
     long result = 0;
     while((line = br.readLine()) != null) {
-      result += (precedence) ? solveExpression(line) : solveExpression(line);
+      result += (precedence) ? solveExpressionWithPrecedence(line) : solveExpression(line);
     }
     br.close();
     return result;
