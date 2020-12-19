@@ -69,8 +69,41 @@ public class MonsterMessages {
     return result;
   }
 
+  // Rule "0: 8 11" and we need to change "8: 42" to "8: 42 | 42 8" and "11: 42 31" to "11: 42 31 | 42 11 31"
+  // this means that the regex string must start with "42+" and must end with n number of 42 and n number of 31 
+  public int getValidCountAfterEdit() throws IOException{
+    int result = 0;
+    Map<Integer, String> ruleMap = getRuleMap();
+    Set<String> messageSet = getMessageSet();
+    String pattern42 = getRegex(ruleMap, 42);
+    String pattern31 = getRegex(ruleMap, 31);
+    int depth = 1;
+    String pattern = "^(" + pattern42 + ")+(";
+    // Started with max depth as 20 and reduced it till the same solution came up.
+    while(depth <= 5) {
+      pattern += "(";
+      for(int i = 1; i <= depth; i++) {
+        pattern += pattern42;
+      }
+      pattern += ")(";
+      for(int i = 1; i <= depth; i++) {
+        pattern += pattern31;
+      }
+      pattern += ")|";
+      depth++;
+    }
+    pattern = pattern.substring(0, pattern.length() - 1) + ")$";
+    for(String message: messageSet) {
+      if(message.matches(pattern)) {
+        result += 1;
+      }
+    }
+    return result;
+  }
+
   public static void main(String[] args) throws IOException{
     MonsterMessages obj = new MonsterMessages();
     System.out.println("Puzzle 1 solution = " + obj.getValidCount());
+    System.out.println("Puzzle 2 solution = " + obj.getValidCountAfterEdit());
   }
 }
