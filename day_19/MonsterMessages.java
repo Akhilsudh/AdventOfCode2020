@@ -4,28 +4,18 @@ package day_19;
 import java.io.*;
 import java.util.*;
 public class MonsterMessages {
-  
-  static class Rule {
-    boolean leaf;
-    String rule;
-    
-    public Rule(boolean leaf, String rule) {
-      this.leaf = leaf;
-      this.rule = rule;
-    }
-  }
 
-  Map<Integer, Rule> getRuleMap() throws IOException {
-    Map<Integer, Rule> ruleMap = new HashMap<Integer, Rule>();
+  Map<Integer, String> getRuleMap() throws IOException {
+    Map<Integer, String> ruleMap = new HashMap<Integer, String>();
     BufferedReader br = new BufferedReader(new FileReader("day_19/rule.list"));
     String line = "";
     while((line = br.readLine()) != null) {
       String[] rule = line.split(": ");
       if(rule[1].charAt(0) != '"') {
-        ruleMap.put(Integer.parseInt(rule[0]), new Rule(false, rule[1]));
+        ruleMap.put(Integer.parseInt(rule[0]), rule[1]);
       }
       else {
-        ruleMap.put(Integer.parseInt(rule[0]), new Rule(true, rule[1].charAt(2) + ""));
+        ruleMap.put(Integer.parseInt(rule[0]), rule[1].charAt(1) + "");
       }
     }
     br.close();
@@ -34,31 +24,53 @@ public class MonsterMessages {
   
   Set<String> getMessageSet() throws IOException {
     Set<String> messageSet = new HashSet<String>();
-    BufferedReader br = new BufferedReader(new FileReader("day_19/messages.list");
+    BufferedReader br = new BufferedReader(new FileReader("day_19/messages.list"));
     String line = "";
     while((line = br.readLine()) != null) {
       messageSet.add(line);
     }
+    br.close();
     return messageSet;
   }
 
-  void dfs(Map<Integer, Rule> ruleMap, Set<String> messageSet, int id, String message, Set<String> validSet) {
-    if(ruleMap.get(id).leaf) {
-      valid
-      return;
+  String getRegex(Map<Integer, String> ruleMap, int index) {
+    while(ruleMap.get(index).matches(".*\\d.*")) {
+      String[] rules = ruleMap.get(index).split(" ");
+      String regex = "";
+      for(String rule: rules) {
+        if(rule.matches("\\d+")) {
+          String string = ruleMap.get(Integer.parseInt(rule));
+          if(string.matches("[ab]")) {
+            regex += string;
+          }
+          else {
+            regex += "( " + string + " )";
+          }
+        }
+        else {
+          regex += rule;
+        }
+      }
+      ruleMap.put(index, regex);
     }
-    else {
-      String[] rules = ruleMap.get(id).rule.split(" | ");
-      
-    }
+    return "(" + ruleMap.get(index) + ")";
   }
 
   public int getValidCount() throws IOException{
     int result = 0;
-    Map<Integer, Rule> ruleMap = getRuleMap();
+    Map<Integer, String> ruleMap = getRuleMap();
     Set<String> messageSet = getMessageSet();
-    Set<String> validMessageSet = new HashSet<String>();
-    dfs(ruleMap, messageSet, 0, "", validMessageSet);
+    String pattern = "^" + getRegex(ruleMap, 0) + "$";
+    for(String message: messageSet) {
+      if(message.matches(pattern)) {
+        result += 1;
+      }
+    }
     return result;
+  }
+
+  public static void main(String[] args) throws IOException{
+    MonsterMessages obj = new MonsterMessages();
+    System.out.println("Puzzle 1 solution = " + obj.getValidCount());
   }
 }
