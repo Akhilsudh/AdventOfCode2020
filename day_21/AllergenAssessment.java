@@ -3,15 +3,18 @@ package day_21;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Stream;
 public class AllergenAssessment {
+
+  static Map<String, Integer> count;
+  static Map<String, Set<String>> possibleMap;
+
   int getNoAllergen() throws IOException{
     int result = 0;
     BufferedReader br = new BufferedReader(new FileReader("day_21/allergen.list"));
     Set<String> allergens = new HashSet<String>();
     Set<String> ingredients = new HashSet<String>();
     List<String> lines = new ArrayList<String>();
-    Map<String, Integer> count = new HashMap<String, Integer>();
+    count = new HashMap<String, Integer>();
     String line;
     while((line = br.readLine()) != null) {
       lines.add(line);
@@ -30,7 +33,7 @@ public class AllergenAssessment {
       }
     }
     br.close();
-    Map<String, Set<String>> possibleMap = new HashMap<String, Set<String>>();
+    possibleMap = new HashMap<String, Set<String>>();
     for(String allergen: allergens) {
       possibleMap.put(allergen, new HashSet<String>(ingredients));
     }
@@ -46,19 +49,48 @@ public class AllergenAssessment {
         }
       }
     }
-    System.out.println(possibleMap);
     for(Set<String> ings: possibleMap.values()) {
       for(String ing: ings) {
         count.remove(ing);
       }
     }
-    // System.out.println(count);
     result = count.values().stream().reduce(Integer::sum).get();
     return result;
   }
 
+  String getValidIngredients() {
+    String result = "";
+    List<String> alphabeticalAllergens = new ArrayList<String>(possibleMap.keySet());
+    Collections.sort(alphabeticalAllergens);
+    Map<String, Set<String>> possibleMapCopy;
+    Map<String, String> validMap = new HashMap<String, String>();
+    while(!possibleMap.isEmpty()) {
+      possibleMapCopy = new HashMap<String, Set<String>>(possibleMap);
+      for(String allergen: possibleMapCopy.keySet()) {
+        if(possibleMapCopy.get(allergen).size() == 1) {
+          String ingredient = possibleMapCopy.get(allergen).toArray()[0].toString();
+          validMap.put(allergen, ingredient);
+          possibleMap.remove(allergen);
+        }
+      }
+      possibleMapCopy = new HashMap<String, Set<String>>(possibleMap);
+      for(String allergen: possibleMapCopy.keySet()) {
+        for(String ingredient: validMap.values()) {
+          Set<String> set = possibleMap.get(allergen);
+          set.remove(ingredient);
+          possibleMap.put(allergen, set);
+        }
+      }
+    }
+    for(String allergen: alphabeticalAllergens) {
+      result += "," + validMap.get(allergen);
+    }
+    return result.substring(1);
+  }
+
   public static void main(String[] args) throws IOException{
     AllergenAssessment obj = new AllergenAssessment();
-    System.out.println(obj.getNoAllergen());
+    System.out.println("Puzzle 1 solution = " + obj.getNoAllergen());
+    System.out.println("Puzzle 2 solution = " + obj.getValidIngredients());
   }
 }
