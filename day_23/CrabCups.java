@@ -3,9 +3,10 @@ package day_23;
 
 import java.util.*;
 public class CrabCups {
-  static Node head = null;
-  static Node tail = null;
-  Set<Integer> removed;
+  static Node head;
+  static Node tail;
+  static Set<Integer> removed;
+  static Map<Integer, Node> cupMap;
 
   class Node {
     int value;
@@ -16,7 +17,7 @@ public class CrabCups {
     }
   }
 
-  void addNode(int value) {
+  Node addNode(int value) {
     Node cur = new Node(value);
     if(head == null) {
       head = cur;
@@ -26,11 +27,22 @@ public class CrabCups {
     }
     tail = cur;
     tail.next = head;
+    return cur;
   }
 
-  void makeCircularLinkedList(String cups) {
+  void makeCircularLinkedList(String cups, int size) {
+    head = null;
+    tail = null;
+    cupMap = new HashMap<Integer, Node>();
+    Node node;
     for(int i = 0; i < cups.length(); i++) {
-      addNode(Integer.parseInt(cups.charAt(i)+""));
+      int value = Integer.parseInt(cups.charAt(i)+"");
+      node = addNode(value);
+      cupMap.put(value, node);
+    }
+    for(int i = cupMap.size() + 1; i <= size; i++) {
+      node = addNode(i);
+      cupMap.put(i, node);
     }
   }
 
@@ -66,7 +78,6 @@ public class CrabCups {
   void playGame(int iterations) {
     Node start = head;
     for(int i = 0; i < iterations; i++) {
-      System.out.println("Iteration " + (i + 1));
       List<Node> nodes = removeNext3(start);
       int value = start.value;
       value = value - 1;
@@ -79,43 +90,42 @@ public class CrabCups {
         }
       }
       if(value == 0) {
-        Node node = start;
-        Node max = new Node(Integer.MIN_VALUE);
-        node = node.next;
-        while(node != start) {
-          if(node.value > max.value) {
-            max = node;
-          }
-          node = node.next;
+        value = cupMap.size();
+        while(removed.contains(value)) {
+          value = value - 1;
         }
-        System.out.println("Destination " + max.value);
-        addNext3(max, nodes);
-        
+        Node node = cupMap.get(value);
+        addNext3(node, nodes);
       }
       else {
-        Node node = start;
-        node = node.next;
-        while(node != start) {
-          if(node.value == value) {
-            break;
-          }
-          node = node.next;
-        }
-        System.out.println("Destination " + node.value);
+        Node node = cupMap.get(value);
         addNext3(node, nodes);
       }
       start = start.next;
-      System.out.println("Start Node " + start.value);
-      testCircularLinkedList();
-      System.out.println();
     }
+  }
+
+  String getCupString() {
+    String string = "";
+    Node node = cupMap.get(1).next;
+    while(node != cupMap.get(1)) {
+      string += node.value;
+      node = node.next;
+    }
+    return string;
+  }
+
+  long twoStarPositionProduct() {
+    return (long)cupMap.get(1).next.value * (long)cupMap.get(1).next.next.value;
   }
 
   public static void main(String[] args) {
     CrabCups obj = new CrabCups();
-    obj.makeCircularLinkedList("598162734");
-    obj.testCircularLinkedList();
-    System.out.println();
+    obj.makeCircularLinkedList("598162734", 0);
     obj.playGame(100);
+    System.out.println("Puzzle 1 solution = " + obj.getCupString());
+    obj.makeCircularLinkedList("598162734", 1000000);
+    obj.playGame(10000000);
+    System.out.println("Puzzle 2 solution = " + obj.twoStarPositionProduct());
   }
 }
