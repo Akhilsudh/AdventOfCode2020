@@ -52,7 +52,41 @@ public class LobbyLayout {
         tileType.put(key, !tileType.get(key));
       }
       else {
-        tileType.put(x + "," + y, true);
+        tileType.put(key, true);
+        x = x - 2;
+        key = x + "," + y;
+        if(!tileType.containsKey(key)) {
+          tileType.put(key, false);
+        }
+        x = x + 2;
+        key = x + "," + y;
+        if(!tileType.containsKey(key)) {
+          tileType.put(key, false);
+        }
+        x = x - 1;
+        y = y - 1;
+        key = x + "," + y;
+        if(!tileType.containsKey(key)) {
+          tileType.put(key, false);
+        }
+        x = x - 1;
+        y = y + 1;
+        key = x + "," + y;
+        if(!tileType.containsKey(key)) {
+          tileType.put(key, false);
+        }
+        x = x + 1;
+        y = y + 1;
+        key = x + "," + y;
+        if(!tileType.containsKey(key)) {
+          tileType.put(key, false);
+        }
+        x = x + 1;
+        y = y - 1;
+        key = x + "," + y;
+        if(!tileType.containsKey(key)) {
+          tileType.put(key, false);
+        }
       }
     }
     br.close();
@@ -69,10 +103,149 @@ public class LobbyLayout {
     return count;
   }
 
+  int blackSideCountAfterChanges(int iterations) {
+    for(int i = 0; i < iterations; i++) {
+      Map<String, Boolean> tileTypeCopy = new HashMap<String, Boolean>(tileType);
+      for(String key: tileTypeCopy.keySet()) {
+        int xc = Integer.parseInt(key.split(",")[0]);
+        int yc = Integer.parseInt(key.split(",")[1]);
+        if(tileTypeCopy.get(key)) {
+          int count = 0;
+          String keyCopy = key;
+          int x = xc - 2;
+          key = x + "," + yc;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+          x = xc + 2;
+          key = x + "," + yc;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+          x = xc - 1;
+          int y = yc - 1;
+          key = x + "," + y;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+          x = xc - 1;
+          y = yc + 1;
+          key = x + "," + y;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+          x = xc + 1;
+          y = yc + 1;
+          key = x + "," + y;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+          x = xc + 1;
+          y = yc - 1;
+          key = x + "," + y;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+
+          if(count == 0 || count > 2) {
+            tileType.put(keyCopy, false);
+          }
+        }
+        else {
+          int count = 0;
+          String keyCopy = key;
+          int x = xc - 2;
+          key = x + "," + yc;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+          x = xc + 2;
+          key = x + "," + yc;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+          x = xc - 1;
+          int y = yc - 1;
+          key = x + "," + y;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+          x = xc - 1;
+          y = yc + 1;
+          key = x + "," + y;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+          x = xc + 1;
+          y = yc + 1;
+          key = x + "," + y;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+          x = xc + 1;
+          y = yc - 1;
+          key = x + "," + y;
+          if(!tileTypeCopy.containsKey(key)) {
+            tileType.put(key, false);
+          }
+          else {
+            count += (tileTypeCopy.get(key)) ? 1 : 0;
+          }
+
+          if(count == 2) {
+            tileType.put(keyCopy, true);
+          }
+        }
+      }
+    }
+    int count = 0;
+    for(boolean side: tileType.values()) {
+      if(side) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+
   public static void main(String[] args) throws IOException {
     LobbyLayout obj = new LobbyLayout();
     obj.collectTileList();
     System.out.println(obj.blackSideCount());
+    System.out.println(tileType);
+    System.out.println(obj.blackSideCountAfterChanges(1));
     System.out.println(tileType);
   }
 }
